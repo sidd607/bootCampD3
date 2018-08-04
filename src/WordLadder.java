@@ -43,7 +43,7 @@ public class WordLadder {
 	public List<WordNode> generateValidPermutation (WordNode input) {
 		
 		List<WordNode> validPermutations = new ArrayList<>();
-		
+		Set<String> erasedStrings=new HashSet<String>();
 		char[] inputArray = input.getWord().toCharArray();
 		for(int i=0; i<inputArray.length; i++) {
 			for (char c = 'A'; c <='Z'; c++) {
@@ -55,9 +55,11 @@ public class WordLadder {
 				if (wordsSet.contains(newString)) {
 					validPermutations.add(new WordNode(newString, input.getSteps() +1 , input));
 					wordsSet.remove(newString);
+					erasedStrings.add(newString);
 				}
 				inputArray[i] = tmp;
 			}
+			wordsSet.addAll(erasedStrings);
 		}
 		
 //		System.out.println(validPermutations.size());
@@ -101,7 +103,8 @@ public class WordLadder {
 //		WordNode wordNode = new WordNode("GOLD", 1, null);
 //		wordLadder.generateValidPermutation(wordNode);
 		
-		List<String> answer = wordLadder.generateLadder("CLAY", "GOLDA");
+		List<String> answer = wordLadder.generateLadder("CLAY", "GOLD");
+//		List<String> answer2 = wordLadder.generateLadder("CLAY", "GOLD");
 		System.out.println(answer.size());
 		answer.forEach(val->System.out.println(val));
 		
